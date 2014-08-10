@@ -14,9 +14,11 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    logreader.cpp
+    logreader.cpp \
+    hexmanager.cpp
 
 HEADERS  += mainwindow.h \
-    logreader.h
+    logreader.h \
+    hexmanager.h
 
 FORMS    += mainwindow.ui

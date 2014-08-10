@@ -16,28 +16,54 @@ MainWindow::~MainWindow()
 void MainWindow::on_pb_connect_clicked()
 {
     ui->lbStatus->setText(kPleaseWait);
-    ui->pb_connect->setEnabled(false);
     myLogReader.reset(new LogReader(ui->leConnectionString->text()));
-    StatusCheck();
+    myLogReader->connectToDataBase();
+    checkStatus();
 }
 
 void MainWindow::on_pbRawLog_clicked()
 {
-    // TODO
+    auto rawLogText =  myLogReader->getRawLog();
+    ui->tbConsole->setText(rawLogText);
 }
 
 void MainWindow::on_pbDisconnect_clicked()
 {
     myLogReader->disconnect();
-    StatusCheck();
+    connectDisable(false);
 }
 
-void MainWindow::StatusCheck()
+bool MainWindow::checkStatus()
 {
-    auto DBStatus = myLogReader->connectToDataBase() ;
+    auto DBStatus = myLogReader->checkStatus() ;
     if(DBStatus.type() != QSqlError::NoError)
+    {
         ui->lbStatus->setText(kDBStatus + DBStatus.databaseText()
                               + kReturn + DBStatus.driverText());
-    else
+        connectDisable(false);
+        return false;
+    }
         ui->lbStatus->setText(kDBStatus + kDBOKStatus);
+        connectDisable(true);
+        return true;
+}
+
+void MainWindow::connectDisable(bool disableConnect)
+{
+    ui->pb_connect->setEnabled(!disableConnect);
+    ui->pbDisconnect->setEnabled(disableConnect);
+    ui->pbRawLog->setEnabled(disableConnect);
+    ui->pb_testQuery->setEnabled(disableConnect);
+    ui->pbDisconnect->setEnabled(disableConnect);
+}
+
+void MainWindow::on_pb_testQuery_clicked()
+{
+    auto textToDisplay = myLogReader->runTestQuery();
+    ui->tbConsole->setText(textToDisplay);
+}
+
+void MainWindow::on_pb_clearConsole_clicked()
+{
+    ui->tbConsole->setText(QString(""));
 }

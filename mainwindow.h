@@ -13,7 +13,6 @@ const QString kDBStatus = "Database Status: ";
 const QString kSpace = " ";
 const QString kDBOKStatus = "OK";
 const QString kPleaseWait = "Please Wait...";
-const QString kReturn = "\n";
 }
 
 
@@ -32,12 +31,17 @@ private slots:
 
     void on_pbDisconnect_clicked();
 
+    void on_pb_testQuery_clicked();
+
+    void on_pb_clearConsole_clicked();
+
 private:
     QString connectionStringTest = QString("Server=TEORIA-PC\\TDB;Database=TestDB;UID=sa;PWD=kanako;");
     Ui::MainWindow *ui;
     LogReaderPtr myLogReader;
     /** Helper Functions **/
-    void StatusCheck();
+    bool checkStatus();
+    void connectDisable(bool disableConnect);
 };
 
 #endif // MAINWINDOW_H

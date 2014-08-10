@@ -80,6 +80,9 @@
        </item>
        <item>
         <widget class="QPushButton" name="pbRawLog">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -92,7 +95,27 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pb_testQuery">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Test Query</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pb_clearConsole">
+         <property name="text">
+          <string>Clear Console</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pbDisconnect">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Disconnect</string>
          </property>
