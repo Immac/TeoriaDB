@@ -14,7 +14,8 @@ class LogReader
 public:
     LogReader(): connectionString(){}
     LogReader(QString cString): connectionString(cString){}
-    QSqlError getDBStatus();
+    QSqlError connectToDataBase();
+    QSqlError disconnect();
 private:
     QString connectionString;
     QSqlDatabasePtr database;

@@ -10,6 +10,10 @@ class MainWindow;
 }
 namespace{
 const QString kDBStatus = "Database Status: ";
+const QString kSpace = " ";
+const QString kDBOKStatus = "OK";
+const QString kPleaseWait = "Please Wait...";
+const QString kReturn = "\n";
 }
 
 
@@ -24,10 +28,16 @@ public:
 private slots:
     void on_pb_connect_clicked();
 
+    void on_pbRawLog_clicked();
+
+    void on_pbDisconnect_clicked();
+
 private:
     QString connectionStringTest = QString("Server=TEORIA-PC\\TDB;Database=TestDB;UID=sa;PWD=kanako;");
     Ui::MainWindow *ui;
     LogReaderPtr myLogReader;
+    /** Helper Functions **/
+    void StatusCheck();
 };
 
 #endif // MAINWINDOW_H
