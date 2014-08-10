@@ -29,7 +29,6 @@ private:
     QString connectionString;
     QSqlDatabasePtr database;
     QString runQuery(QString queryString);
-
 };
 
 #endif // LOGREADER_H
