@@ -6,12 +6,14 @@
 typedef std::shared_ptr<QSqlDatabase> QSqlDatabasePtr;
 namespace
 {
+const QString kQueryCount = QString("Q# ");
 const QString kDBType = QString("QODBC");
 const QString kDriver = QString("DRIVER={SQL SERVER};");
 const QString kRawLogQuery = QString("SELECT [RowLog Contents 0] from fn_dblog(null, null)");
 const QString kTestQuery = QString("SELECT * from TestTable");
 const QString kReturn = QString("\n");
 const QString kError = QString("Error");
+const QString kSpace = " ";
 }
 class LogReader
 {

@@ -121,6 +121,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="pb_theDebugButton">
+         <property name="text">
+          <string>The Debug Button</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>

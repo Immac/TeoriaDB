@@ -10,7 +10,6 @@ class MainWindow;
 }
 namespace{
 const QString kDBStatus = "Database Status: ";
-const QString kSpace = " ";
 const QString kDBOKStatus = "OK";
 const QString kPleaseWait = "Please Wait...";
 }
@@ -34,6 +33,8 @@ private slots:
     void on_pb_testQuery_clicked();
 
     void on_pb_clearConsole_clicked();
+
+    void on_pb_theDebugButton_clicked();
 
 private:
     QString connectionStringTest = QString("Server=TEORIA-PC\\TDB;Database=TestDB;UID=sa;PWD=kanako;");

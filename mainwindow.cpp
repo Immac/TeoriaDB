@@ -67,3 +67,9 @@ void MainWindow::on_pb_clearConsole_clicked()
 {
     ui->tbConsole->setText(QString(""));
 }
+
+void MainWindow::on_pb_theDebugButton_clicked()
+{
+    //QString string = QString("hello \x10 \x20 \x7b \x53 \x7e");
+    //ui->tbConsole->setText(HexManager::toAlphaNumericHex(string));
+}

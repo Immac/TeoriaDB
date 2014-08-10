@@ -40,11 +40,15 @@ QString LogReader::runQuery(QString queryString)
     QSqlQuery query(*database);
     if(database->open())
     {
+        int queryCounter = 0;
         query.exec(queryString);
         while(query.next())
         {
-            QString printableText = HexManager::toLegibleHex(query.value(0).toString());
-            output.append(printableText);
+            queryCounter++;
+            auto valString = query.value(0).toString();
+            auto val = query.value(0);
+            QString printableText = HexManager::toHex(query.value(0).toByteArray());
+            output.append(kQueryCount + QString::number(queryCounter) + kSpace + printableText);
             output.append(kReturn);
         }
         database->close();
