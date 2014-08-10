@@ -13,14 +13,12 @@ QString HexManager::toAlphaNumericHex(QByteArray charString)
 QString HexManager::toHex(QByteArray charString, int ignoreRangeBegin, int ignoreRangeEnd)
 {
     QString output;
-
-    for(auto character:charString.toHex())
+    for(auto character:charString)
     {
-        int charInt = (int)character;
-        if(charInt >= ignoreRangeBegin && charInt <= ignoreRangeEnd)
+        if(character >= ignoreRangeBegin && character <= ignoreRangeEnd)
             output.append(kCharPrefix + character);
         else
-            output.append("[" + kHexPrefix + QString::number(charInt,16) + "]");
+            output.append("[" + kHexPrefix + QString::number(character,16) + "]");
     }
     return output;
 }
