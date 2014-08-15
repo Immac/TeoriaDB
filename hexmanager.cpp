@@ -2,15 +2,15 @@
 
 QString HexManager::toPrintableHex(QByteArray charString)
 {
-    return toHex(charString,kFirstPrintableChar,kLastPrintableChar);
+    return toHexString(charString,kFirstPrintableChar,kLastPrintableChar);
 }
 
 QString HexManager::toAlphaNumericHex(QByteArray charString)
 {
-    return toHex(charString,kFirstAlphanumeric,kLastAlphanumeric);
+    return toHexString(charString,kFirstAlphanumeric,kLastAlphanumeric);
 }
 
-QString HexManager::toHex(QByteArray charString, int ignoreRangeBegin, int ignoreRangeEnd)
+QString HexManager::toHexString(QByteArray charString, int ignoreRangeBegin, int ignoreRangeEnd)
 {
     QString output;
     for(auto character:charString)

@@ -47,7 +47,7 @@ QString LogReader::runQuery(QString queryString)
             queryCounter++;
             auto valString = query.value(0).toString();
             auto val = query.value(0);
-            QString printableText = HexManager::toHex(query.value(0).toByteArray());
+            QString printableText = HexManager::toHexString(query.value(0).toByteArray());
             output.append(kQueryCount + QString::number(queryCounter) + kSpace + printableText);
             output.append(kReturn);
         }

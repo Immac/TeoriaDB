@@ -19,7 +19,7 @@ class HexManager
 public:
     static QString toPrintableHex(QByteArray charString);
     static QString toAlphaNumericHex(QByteArray charString);
-    static QString toHex(QByteArray charString,int ignoreRangeBegin = 256,int ignoreRangeEnd = 256);
+    static QString toHexString(QByteArray charString,int ignoreRangeBegin = 256,int ignoreRangeEnd = 256);
 
 
 private:
