@@ -25,16 +25,10 @@ public:
 
 private slots:
     void on_pb_connect_clicked();
-
     void on_pbRawLog_clicked();
-
     void on_pbDisconnect_clicked();
-
-    void on_pb_testQuery_clicked();
-
     void on_pb_clearConsole_clicked();
-
-    void on_pb_theDebugButton_clicked();
+    void on_pb_testQuery_clicked();
 
 private:
     QString connectionStringTest = QString("Server=TEORIA-PC\\TDB;Database=TestDB;UID=sa;PWD=kanako;");

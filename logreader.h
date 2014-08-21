@@ -9,7 +9,7 @@ namespace
 const QString kQueryCount = QString("Q# ");
 const QString kDBType = QString("QODBC");
 const QString kDriver = QString("DRIVER={SQL SERVER};");
-const QString kRawLogQuery = QString("SELECT [RowLog Contents 0] from fn_dblog(null, null)");
+const QString kRawLogQuery = QString("SELECT [RowLog Contents 0] from fn_dblog(null, null) ");
 const QString kTestQuery = QString("SELECT * from TestTable");
 const QString kReturn = QString("\n");
 const QString kError = QString("Error");
@@ -26,11 +26,11 @@ public:
 
     QString getRawLog();
     QString runTestQuery();
-
+    QString runQuery(QString queryString);
 private:
     QString connectionString;
     QSqlDatabasePtr database;
-    QString runQuery(QString queryString);
+
 };
 
 #endif // LOGREADER_H

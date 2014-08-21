@@ -57,19 +57,15 @@ void MainWindow::connectDisable(bool disableConnect)
     ui->pbDisconnect->setEnabled(disableConnect);
 }
 
-void MainWindow::on_pb_testQuery_clicked()
-{
-    auto textToDisplay = myLogReader->runTestQuery();
-    ui->tbConsole->setText(textToDisplay);
-}
-
 void MainWindow::on_pb_clearConsole_clicked()
 {
     ui->tbConsole->setText(QString(""));
 }
 
-void MainWindow::on_pb_theDebugButton_clicked()
+
+void MainWindow::on_pb_testQuery_clicked()
 {
-    //QString string = QString("hello \x10 \x20 \x7b \x53 \x7e");
-    //ui->tbConsole->setText(HexManager::toAlphaNumericHex(string));
+    auto query = ui->le_Query->text();
+    auto textToDisplay = myLogReader->runQuery(query);
+    ui->tbConsole->setText(textToDisplay);
 }

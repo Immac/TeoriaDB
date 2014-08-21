@@ -56,7 +56,33 @@
       </layout>
      </widget>
     </item>
-    <item alignment="Qt::AlignLeft">
+    <item>
+     <widget class="QFrame" name="frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="lbl_Query">
+         <property name="text">
+          <string>Query</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="le_Query">
+         <property name="text">
+          <string>SELECT [RowLog Contents 0] FROM sys.fn_dblog(NULL,NULL) WHERE AllocUnitName = 'dbo.TestTable' </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <widget class="QFrame" name="frameButtons">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -68,7 +94,7 @@
        <item>
         <widget class="QPushButton" name="pb_connect">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -84,7 +110,7 @@
           <bool>false</bool>
          </property>
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -100,9 +126,22 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>Test Query</string>
+          <string>Execute Query</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="QPushButton" name="pb_clearConsole">
@@ -118,13 +157,6 @@
          </property>
          <property name="text">
           <string>Disconnect</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pb_theDebugButton">
-         <property name="text">
-          <string>The Debug Button</string>
          </property>
         </widget>
        </item>
@@ -179,7 +211,7 @@
      <x>0</x>
      <y>0</y>
      <width>680</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
