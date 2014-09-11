@@ -24,9 +24,9 @@ public:
     QSqlError disconnect();
     QSqlError checkStatus();
 
-    QString getRawLog();
-    QString runTestQuery();
-    QString runQuery(QString queryString);
+    QList<QByteArray> getRawLog();
+    QList<QByteArray> runTestQuery();
+    QList<QByteArray> runQuery(QString queryString);
 private:
     QString connectionString;
     QSqlDatabasePtr database;

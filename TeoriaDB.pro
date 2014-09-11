@@ -15,10 +15,22 @@ CONFIG += c++11
 SOURCES += main.cpp\
         mainwindow.cpp \
     logreader.cpp \
-    hexmanager.cpp
+    hexmanager.cpp \
+    registerrestorer.cpp \
+    bytecaster.cpp \
+    fielddesccriptor.cpp \
+    numeric.cpp \
+    datetime.cpp
 
 HEADERS  += mainwindow.h \
     logreader.h \
-    hexmanager.h
+    hexmanager.h \
+    registerrestorer.h \
+    bytecaster.h \
+    fielddesccriptor.h \
+    numeric.h \
+    datetime.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    registerrestorer.ui \
+    fielddesccriptor.ui

@@ -24,19 +24,19 @@ QSqlError LogReader::checkStatus()
     return database->lastError();
 }
 
-QString LogReader::getRawLog()
+QList<QByteArray> LogReader::getRawLog()
 {
     return runQuery(kRawLogQuery);
 }
 
-QString LogReader::runTestQuery()
+QList<QByteArray> LogReader::runTestQuery()
 {
     return runQuery(kTestQuery);
 }
 
-QString LogReader::runQuery(QString queryString)
+QList<QByteArray> LogReader::runQuery(QString queryString)
 {
-    QString output;
+    QList<QByteArray> output;
     QSqlQuery query(*database);
     if(database->open())
     {
@@ -47,12 +47,11 @@ QString LogReader::runQuery(QString queryString)
             queryCounter++;
             auto valString = query.value(0).toString();
             auto val = query.value(0);
-            QString printableText = HexManager::toHexString(query.value(0).toByteArray());
-            output.append(kQueryCount + QString::number(queryCounter) + kSpace + printableText);
-            output.append(kReturn);
+            output.append(query.value(0).toByteArray());
         }
         database->close();
-        return output;
     }
-    return kError;
+    return output;
 }
+
+

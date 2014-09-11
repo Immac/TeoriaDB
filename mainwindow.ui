@@ -49,7 +49,7 @@
        <item>
         <widget class="QLineEdit" name="leConnectionString">
          <property name="text">
-          <string>Server=TEORIA-PC\TDB;Database=TestDB;UID=sa;PWD=kanako;</string>
+          <string>Server=MIGUELC-PC\SQLE;Database=Proyecto;UID=sa;PWD=kanako;</string>
          </property>
         </widget>
        </item>
@@ -75,7 +75,13 @@
        <item>
         <widget class="QLineEdit" name="le_Query">
          <property name="text">
-          <string>SELECT [RowLog Contents 0] FROM sys.fn_dblog(NULL,NULL) WHERE AllocUnitName = 'dbo.TestTable' </string>
+          <string>SELECT [RowLog Contents 0] FROM sys.fn_dblog(NULL,NULL) WHERE AllocUnitName = 'dbo.table1' and operation IN ('LOP_DELETE_ROWS');</string>
+         </property>
+         <property name="cursorPosition">
+          <number>0</number>
+         </property>
+         <property name="placeholderText">
+          <string>Write your query here</string>
          </property>
         </widget>
        </item>
@@ -105,22 +111,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pbRawLog">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Get Raw Log </string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="pb_testQuery">
          <property name="enabled">
           <bool>false</bool>
@@ -131,13 +121,26 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="btnSelectRegister">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Select Result</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>40</width>
+           <width>160</width>
            <height>20</height>
           </size>
          </property>
@@ -160,6 +163,19 @@
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
      </widget>
     </item>
@@ -175,7 +191,7 @@
        <item>
         <widget class="QLabel" name="lbStatus">
          <property name="text">
-          <string>Status:</string>
+          <string>Status: Disconected</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>

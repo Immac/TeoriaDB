@@ -19,8 +19,14 @@ QString HexManager::toHexString(QByteArray byteArray, int ignoreRangeBegin, int 
         if(byte >= ignoreRangeBegin && byte <= ignoreRangeEnd)
             output.append(kCharPrefix + byte);
         else
-            output.append("[" + kHexPrefix + QString::number(byte,16) + "]");
+            output.append("[" + kHexPrefix + prependZero(byte) + "]");
     }
     return output;
+}
+
+QString HexManager::prependZero(unsigned char byte)
+{
+    int oneDigitHexMax = 16;
+    return (byte < oneDigitHexMax) ? QString("0") + QString::number(byte,16):QString::number(byte,16);
 }
 

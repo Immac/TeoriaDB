@@ -23,7 +23,7 @@ public:
 
 
 private:
-
+    static QString prependZero(unsigned char byte);
     HexManager() = default;
 
 };
