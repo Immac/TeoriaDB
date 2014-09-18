@@ -51,7 +51,7 @@ void MainWindow::connectDisable(bool disableConnect)
     ui->pbDisconnect->setEnabled(disableConnect);
     ui->pb_testQuery->setEnabled(disableConnect);
     ui->pbDisconnect->setEnabled(disableConnect);
-    ui->btnSelectRegister->setEnabled(disableConnect);
+    ui->btnSelectRegister->setEnabled(false);
 }
 
 void MainWindow::on_pb_clearConsole_clicked()

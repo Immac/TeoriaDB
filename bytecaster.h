@@ -10,27 +10,29 @@ class ByteCaster
 {
 public:
     ByteCaster() = default;
-    static long long getLongFromByteArray(QByteArray input);
-    static QString getStringFromByteArray(QByteArray input);
-    static QString getHexFromByteArray(QByteArray input);
-    static QString getTimeFromByteArray(QByteArray input);
-    static double getDoubleFromByteArray(QByteArray input);
-    static double getRealFromByteArray(QByteArray input);
-    static QString getNumericFromByteArray(QByteArray input, int decimalPlaces);
+    static long long toLongLong(QByteArray input);
+    static QString toString(QByteArray input);
+    static QString toHex(QByteArray input);
+    static QString toDateTime(QByteArray input);
+    static double toDouble(QByteArray input);
+    static double toReal(QByteArray input);
+    static QString toNumeric(QByteArray input, int decimalPlaces);
+    static QString toMoney(QByteArray input);
+private:
     static QString theTime(int sizeOfBytes, QByteArray input, int secondDivider);
-    static QString getMoneyFromByteArray(QByteArray input);
+    static bool isSmallDate(QByteArray input);
 };
 
 union LongCharU
 {
     long long integer;
-    char byteArray[sizeof(long long)];
+    char byteArray[8];
 };
 
 union DoubleCharU
 {
     double number;
-    char byteArray[sizeof(long long)];
+    char byteArray[8];
 };
 
 union RealU

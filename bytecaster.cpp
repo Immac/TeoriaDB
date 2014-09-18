@@ -1,7 +1,7 @@
 #include "bytecaster.h"
 
 
-long long ByteCaster::getLongFromByteArray(QByteArray input)
+long long ByteCaster::toLongLong(QByteArray input)
 {
     LongCharU output;
     output.integer = 0;
@@ -10,13 +10,13 @@ long long ByteCaster::getLongFromByteArray(QByteArray input)
     return output.integer;
 }
 
-QString ByteCaster::getStringFromByteArray(QByteArray input)
+QString ByteCaster::toString(QByteArray input)
 {
     QString output(HexManager::toPrintableHex(input));
     return output;
 }
 
-QString ByteCaster::getHexFromByteArray(QByteArray input)
+QString ByteCaster::toHex(QByteArray input)
 {
     QString output(HexManager::toHexString(input));
     return output;
@@ -29,8 +29,8 @@ QString ByteCaster::theTime(int sizeOfBytes, QByteArray input, int secondDivider
     timeBytes.append(input.left(sizeOfBytes));
     dateBytes.append(input.right(sizeOfBytes));
     long long secondFractions,daysElapsed;
-    secondFractions = getLongFromByteArray(timeBytes);
-    daysElapsed = getLongFromByteArray(dateBytes);
+    secondFractions = toLongLong(timeBytes);
+    daysElapsed = toLongLong(dateBytes);
     int seconds,minutes,hours;
     int secondsElapsed,minutesElapsed,hoursElapsed;
     secondsElapsed = floor(secondFractions/secondDivider);
@@ -47,25 +47,30 @@ QString ByteCaster::theTime(int sizeOfBytes, QByteArray input, int secondDivider
     return output;
 }
 
-QString ByteCaster::getMoneyFromByteArray(QByteArray input)
+QString ByteCaster::toMoney(QByteArray input)
 {
-    double output = getLongFromByteArray(input);
+    double output = toLongLong(input);
     return QString::number(output/10000);
 }
 
-QString ByteCaster::getTimeFromByteArray(QByteArray input)
+bool ByteCaster::isSmallDate(QByteArray input)
 {
-    int sizeOfBytes = 2;
-    int secondDivider = 1;
-    if (input.size() == 8)
+    return input.size() == 4;
+}
+
+QString ByteCaster::toDateTime(QByteArray input)
+{
+    int sizeOfBytes = 4;
+    int secondDivider = 300;
+    if (isSmallDate(input))
     {
-        sizeOfBytes = 4;
-        secondDivider = 300;
+        sizeOfBytes = 2;
+        secondDivider = 1;
     }
     return theTime(sizeOfBytes, input, secondDivider);
 }
 
-double ByteCaster::getDoubleFromByteArray(QByteArray input)
+double ByteCaster::toDouble(QByteArray input)
 {
     DoubleCharU output;
     output.number = 0;
@@ -74,7 +79,7 @@ double ByteCaster::getDoubleFromByteArray(QByteArray input)
     return output.number;
 }
 
-double ByteCaster::getRealFromByteArray(QByteArray input)
+double ByteCaster::toReal(QByteArray input)
 {
     RealU output;
     output.number = 0;
@@ -83,11 +88,11 @@ double ByteCaster::getRealFromByteArray(QByteArray input)
     return output.number;
 }
 
-QString ByteCaster::getNumericFromByteArray(QByteArray input,int decimalPlaces)
+QString ByteCaster::toNumeric(QByteArray input,int decimalPlaces)
 {
     unsigned int position = 0;
     bool isPositive = input[position++] != '\0';
-    double output = getLongFromByteArray(input.mid(1));
+    double output = toLongLong(input.mid(1));
     for(int i = 0; i < decimalPlaces;i++)
         output /= 10;
     if(!isPositive)

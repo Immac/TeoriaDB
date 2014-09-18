@@ -51,7 +51,7 @@ int RegisterRestorer::updateVariableColumnCount()
     QByteArray variableColumnCountByteArray;
     for(int i = 0; i < variableColumnCountByteCount; i++)
         variableColumnCountByteArray.append(registerData[positionIndicator++]);
-    int varColumnCount = ByteCaster::getLongFromByteArray(variableColumnCountByteArray);
+    int varColumnCount = ByteCaster::toLongLong(variableColumnCountByteArray);
     ui->leVariableNumberOfColumns->setText(QString::number(varColumnCount));
     return varColumnCount;
 }
@@ -66,7 +66,7 @@ void RegisterRestorer::updateOffsets(int variableColumnCount)
         int offsetByteCount = 2;
         for (int j = 0 ; j < offsetByteCount; j++)
             offsetsByteArray.append(registerData[positionIndicator++]);
-        int offset = ByteCaster::getLongFromByteArray(offsetsByteArray);
+        int offset = ByteCaster::toLongLong(offsetsByteArray);
         offsetLineEditText.append(QString::number(offset) + "\n");
         variableColumnOffsets.append(offset);
     }
@@ -98,7 +98,7 @@ int RegisterRestorer::updateColumnCount()
     const int bytesInColumnCount = 2;
     for(int i = 0; i < bytesInColumnCount; i++)
         columnCountByteArray.append(registerData[positionIndicator++]);
-    int columnCount = ByteCaster::getLongFromByteArray(columnCountByteArray);
+    int columnCount = ByteCaster::toLongLong(columnCountByteArray);
     ui->leTotalColumns->setText(QString::number(columnCount));
     return columnCount;
 }
@@ -117,7 +117,7 @@ int RegisterRestorer::updateEndOfFixedData()
 
     for( ;positionIndicator != endOfFixedDataSizePosition;positionIndicator++)
         endOfFixedDataByteArray.append(registerData[positionIndicator]);
-    int endOfFixedDataValue = ByteCaster::getLongFromByteArray(endOfFixedDataByteArray);
+    int endOfFixedDataValue = ByteCaster::toLongLong(endOfFixedDataByteArray);
     ui->leFixedEndOfDataPosition->setText(QString::number(endOfFixedDataValue));
     return endOfFixedDataValue;
 }
@@ -167,7 +167,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             length = descriptors[i]->getSizeOfElement();
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(ByteCaster::getStringFromByteArray(myByteArray));
+            descriptors[i]->setValue(ByteCaster::toString(myByteArray));
             currentPosition += length;
             --fixedColumnsToGo;
             break;
@@ -177,7 +177,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             end = variableColumnOffsets[currentOffset];
             length = end - start;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(ByteCaster::getStringFromByteArray(myByteArray));
+            descriptors[i]->setValue(ByteCaster::toString(myByteArray));
             --varColumnsToGo;
             break;
         case Int:
@@ -185,7 +185,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             length = 4;
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(QString::number(ByteCaster::getLongFromByteArray(myByteArray)) );
+            descriptors[i]->setValue(QString::number(ByteCaster::toLongLong(myByteArray)) );
             currentPosition += length;
             --fixedColumnsToGo;
             break;
@@ -194,7 +194,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             length = 8;
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(QString::number(ByteCaster::getLongFromByteArray(myByteArray)));
+            descriptors[i]->setValue(QString::number(ByteCaster::toLongLong(myByteArray)));
             currentPosition += length;
             --fixedColumnsToGo;
             break;
@@ -203,7 +203,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             length = 1;
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(QString::number(ByteCaster::getLongFromByteArray(myByteArray)) );
+            descriptors[i]->setValue(QString::number(ByteCaster::toLongLong(myByteArray)) );
             currentPosition += length;
             --fixedColumnsToGo;
             break;
@@ -212,7 +212,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             length = 8;
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(ByteCaster::getTimeFromByteArray(myByteArray));
+            descriptors[i]->setValue(ByteCaster::toDateTime(myByteArray));
             currentPosition += length;
             --fixedColumnsToGo;
             break;
@@ -221,7 +221,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             length = 4;
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(ByteCaster::getTimeFromByteArray(myByteArray));
+            descriptors[i]->setValue(ByteCaster::toDateTime(myByteArray));
             currentPosition += length;
             --fixedColumnsToGo;
             break;
@@ -232,7 +232,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             decimalPlace = descriptors[i]->getDecimalPlaces();
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(ByteCaster::getNumericFromByteArray(myByteArray,decimalPlace));
+            descriptors[i]->setValue(ByteCaster::toNumeric(myByteArray,decimalPlace));
             currentPosition += length;
             --fixedColumnsToGo;
             break;
@@ -242,7 +242,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             length = 8;
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(ByteCaster::getMoneyFromByteArray(myByteArray));
+            descriptors[i]->setValue(ByteCaster::toMoney(myByteArray));
             currentPosition += length;
             --fixedColumnsToGo;
             break;
@@ -251,7 +251,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             length = 8;
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(QString::number(ByteCaster::getDoubleFromByteArray(myByteArray)) );
+            descriptors[i]->setValue(QString::number(ByteCaster::toDouble(myByteArray)) );
             currentPosition += length;
             --fixedColumnsToGo;
             break;
@@ -260,7 +260,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             length = 4;
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(QString::number(ByteCaster::getRealFromByteArray(myByteArray)) );
+            descriptors[i]->setValue(QString::number(ByteCaster::toReal(myByteArray)) );
             currentPosition += length;
             --fixedColumnsToGo;
             break;
@@ -277,7 +277,7 @@ void RegisterRestorer::on_pbRecover_clicked()
             length = descriptors[i]->getSizeOfElement();
             start = currentPosition;
             myByteArray.append(registerData.mid(start,length));
-            descriptors[i]->setValue(ByteCaster::getHexFromByteArray(myByteArray));
+            descriptors[i]->setValue(ByteCaster::toHex(myByteArray));
             currentPosition += length;
             --fixedColumnsToGo;
             break;
