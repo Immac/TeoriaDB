@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     bytecaster.cpp \
     fielddesccriptor.cpp \
     numeric.cpp \
-    datetime.cpp
+    datetime.cpp \
+    connectgui.cpp
 
 HEADERS  += mainwindow.h \
     logreader.h \
@@ -29,8 +30,10 @@ HEADERS  += mainwindow.h \
     bytecaster.h \
     fielddesccriptor.h \
     numeric.h \
-    datetime.h
+    datetime.h \
+    connectgui.h
 
 FORMS    += mainwindow.ui \
     registerrestorer.ui \
-    fielddesccriptor.ui
+    fielddesccriptor.ui \
+    connectgui.ui

@@ -19,7 +19,7 @@ class LogReader
 {
 public:
     LogReader(): connectionString(){}
-    LogReader(QString cString): connectionString(cString){}
+    LogReader(QString connectionString): connectionString(connectionString){}
     QSqlError connectToDataBase();
     QSqlError disconnect();
     QSqlError checkStatus();

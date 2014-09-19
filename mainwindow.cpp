@@ -17,12 +17,17 @@ MainWindow::~MainWindow()
 void MainWindow::on_pb_connect_clicked()
 {
     ui->lbStatus->setText(kPleaseWait);
-    myLogReader.reset(new LogReader(ui->leConnectionString->text()));
+    int ok;
+    QString connectionString = getQueryString(ok);
+    if (ok != 1)
+    {
+        //TODO: Dialog Cancelled Connection
+        return;
+    }
+    myLogReader.reset(new LogReader(connectionString));
     myLogReader->connectToDataBase();
     checkStatus();
 }
-
-
 
 void MainWindow::on_pbDisconnect_clicked()
 {
@@ -60,6 +65,17 @@ void MainWindow::on_pb_clearConsole_clicked()
     ui->btnSelectRegister->setEnabled(false);
 }
 
+QString MainWindow::getQueryString(int &ok)
+{
+    ConnectGui connection(this);
+    connection.setModal(true);
+    ok = connection.exec();
+    auto serverName = connection.getServername();
+    auto databaseName = connection.getDatabaseName();
+    auto userName = connection.getUserName();
+    auto password = connection.getPassword();
+    return QString("Server=%1;Database=%2;UID=%3;PWD=%4;").arg(serverName,databaseName,userName,password);
+}
 
 void MainWindow::on_pb_testQuery_clicked()
 {
@@ -68,9 +84,7 @@ void MainWindow::on_pb_testQuery_clicked()
     QString consoleText;
     int counter = 0;
     for(auto &reg:currentData)
-    {
         consoleText.append(toStringRegister(++counter,reg));
-    }
     updateResultCounter(counter);
     consoleText.append(kQueryFinished + kSpace + QString::number(counter) + kSpace + kQueryFound);
     setConsoleText(consoleText);
@@ -78,7 +92,11 @@ void MainWindow::on_pb_testQuery_clicked()
 
 QString MainWindow::toStringRegister(int counter, QByteArray registry)
 {
-    return kQueryCount + QString::number(counter) + kSpace + HexManager::toHexString(registry) + kReturn;
+    return kQueryCount +
+            QString::number(counter) +
+            kSpace +
+            HexManager::toHexString(registry) +
+            kReturn;
 }
 
 void MainWindow::setConsoleText(QString consoleText)
@@ -98,11 +116,12 @@ void MainWindow::updateResultCounter(int newValue)
 void MainWindow::on_btnSelectRegister_clicked()
 {
     bool ok;
-    int registryId = QInputDialog::getInt(this, tr("Query to select"),
+    int registryId =
+            QInputDialog::getInt(this, tr("Query to select"),
                                  tr("Q#: "), 1, 1, resultCount, 1, &ok);
     if (!ok)
         return;
-    RegisterRestorer restorer;
+    RegisterRestorer restorer(this);
     restorer.initialize(currentData[--registryId]);
     restorer.setModal(true);
     restorer.exec();

@@ -4,7 +4,7 @@
 #include "logreader.h"
 #include "ui_mainwindow.h"
 #include "registerrestorer.h"
-
+#include "connectgui.h"
 typedef std::shared_ptr<LogReader> LogReaderPtr;
 
 namespace Ui {
@@ -50,6 +50,7 @@ private:
     void setConsoleText(QString consoleText);
     int resultCount = 0;
     void updateResultCounter(int newValue);
+    QString getQueryString(int &ok);
 };
 
 #endif // MAINWINDOW_H
