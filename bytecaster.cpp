@@ -1,6 +1,5 @@
 #include "bytecaster.h"
 
-
 long long ByteCaster::toLongLong(QByteArray input)
 {
     LongCharU output;
@@ -34,11 +33,11 @@ QString ByteCaster::theTime(int sizeOfBytes, QByteArray input, int secondDivider
     int seconds,minutes,hours;
     int secondsElapsed,minutesElapsed,hoursElapsed;
     secondsElapsed = floor(secondFractions/secondDivider);
-    minutesElapsed = floor(secondsElapsed/60);
-    hoursElapsed = floor(minutesElapsed/60);
-    seconds = secondsElapsed%60;
-    minutes = minutesElapsed%60;
-    hours = hoursElapsed%24;
+    minutesElapsed = floor(secondsElapsed/secInMin);
+    hoursElapsed = floor(minutesElapsed/minInHr);
+    seconds = secondsElapsed%secInMin;
+    minutes = minutesElapsed%minInHr;
+    hours = hoursElapsed%hrInDay;
     QDate date;
     date.setDate(1900,1,1);
     date = date.addDays(daysElapsed);

@@ -13,17 +13,16 @@ ConnectGui::~ConnectGui()
 {
     delete ui;
 }
+
 QString ConnectGui::getPassword() const
 {
     return password;
 }
 
-
 QString ConnectGui::getUserName() const
 {
     return userName;
 }
-
 
 QString ConnectGui::getDatabaseName() const
 {
@@ -34,7 +33,6 @@ QString ConnectGui::getServername() const
 {
     return servername;
 }
-
 
 void ConnectGui::on_buttonBox_accepted()
 {

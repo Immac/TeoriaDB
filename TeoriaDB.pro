@@ -20,7 +20,6 @@ SOURCES += main.cpp\
     bytecaster.cpp \
     fielddesccriptor.cpp \
     numeric.cpp \
-    datetime.cpp \
     connectgui.cpp
 
 HEADERS  += mainwindow.h \
@@ -30,7 +29,6 @@ HEADERS  += mainwindow.h \
     bytecaster.h \
     fielddesccriptor.h \
     numeric.h \
-    datetime.h \
     connectgui.h
 
 FORMS    += mainwindow.ui \

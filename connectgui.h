@@ -16,11 +16,8 @@ public:
     ~ConnectGui();
 
     QString getServername() const;
-
     QString getDatabaseName() const;
-
     QString getUserName() const;
-
     QString getPassword() const;
 
 private slots:
@@ -31,7 +28,7 @@ private:
     QString servername,
     databaseName,
     userName,
-        password;
+    password;
 
 
 };

@@ -21,6 +21,9 @@ public:
 private:
     static QString theTime(int sizeOfBytes, QByteArray input, int secondDivider);
     static bool isSmallDate(QByteArray input);
+    static const constexpr int minInHr = 60;
+    static const constexpr int secInMin = 60;
+    static const constexpr int hrInDay = 60;
 };
 
 union LongCharU

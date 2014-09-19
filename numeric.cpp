@@ -1,6 +1,5 @@
 #include "numeric.h"
 
-
 QString Numeric::toString()
 {
     QString output;

@@ -5,8 +5,10 @@ class Numeric
 {
 public:
     Numeric(bool isPositive,double integer,double decimal):
-        isPositive(isPositive),integer(integer),decimal(decimal)
-        {}
+        isPositive(isPositive),
+        integer(integer),
+        decimal(decimal)
+    {}
     QString toString();
 private:
     bool isPositive;

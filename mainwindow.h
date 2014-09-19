@@ -20,7 +20,6 @@ const QString kQueryResults = "Results: ";
 const QString kQueryFound = "results found.";
 }
 
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -29,21 +28,18 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-
 private slots:
     void on_pb_connect_clicked();
     void on_pbDisconnect_clicked();
     void on_pb_clearConsole_clicked();
     void on_pb_testQuery_clicked();
-
     void on_btnSelectRegister_clicked();
 
 private:
-    QString connectionStringTest = QString("Server=TEORIA-PC\\TDB;Database=TestDB;UID=sa;PWD=kanako;");
     QList<QByteArray> currentData;
     Ui::MainWindow *ui;
     LogReaderPtr myLogReader;
-    /** Helper Functions **/
+    /* Helper Functions */
     bool checkStatus();
     void connectDisable(bool disableConnect);
     QString toStringRegister(int counter, QByteArray registry);
