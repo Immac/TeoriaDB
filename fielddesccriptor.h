@@ -21,9 +21,13 @@ public:
 
     explicit FieldDescriptor(QWidget *parent = 0);
     ~FieldDescriptor();
-    int getSelectedElement();
+    void setName(QString name);
+    int getSelectedType();
+    void setSelectedType(QString type);
     int getSizeOfElement();
+    void setSizeOfElement(int size);
     int getDecimalPlaces();
+    void setPrecision(int precision);
     void setValue(QString valueText);
 private slots:
     void on_cbType_currentIndexChanged(int index);

@@ -69,10 +69,10 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QSpinBox" name="sbValue"/>
+       <widget class="QSpinBox" name="sbSize"/>
       </item>
       <item>
-       <widget class="QSpinBox" name="sbValue2"/>
+       <widget class="QSpinBox" name="sbPrecision"/>
       </item>
      </layout>
     </widget>

@@ -14,11 +14,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::populateTableSelect()
+{
+    QString query("SELECT SO.NAME FROM sys.tables SO");
+    auto queryOutput = myLogReader->runSingleColumnQuery(query);
+    for(auto &item:queryOutput)
+        ui->cb_TableSelect->addItem(QString(item));
+}
+
 void MainWindow::on_pb_connect_clicked()
 {
     ui->lbStatus->setText(kPleaseWait);
     int ok;
-    QString connectionString = getQueryString(ok);
+    QString connectionString = getConnectionString(ok);
     if (ok != 1)
     {
         //TODO: Dialog Cancelled Connection
@@ -27,6 +35,7 @@ void MainWindow::on_pb_connect_clicked()
     myLogReader.reset(new LogReader(connectionString));
     myLogReader->connectToDataBase();
     checkStatus();
+    populateTableSelect();
 }
 
 void MainWindow::on_pbDisconnect_clicked()
@@ -45,9 +54,9 @@ bool MainWindow::checkStatus()
         connectDisable(false);
         return false;
     }
-        ui->lbStatus->setText(kDBStatus + kDBOKStatus);
-        connectDisable(true);
-        return true;
+    ui->lbStatus->setText(kDBStatus + kDBOKStatus);
+    connectDisable(true);
+    return true;
 }
 
 void MainWindow::connectDisable(bool disableConnect)
@@ -65,7 +74,7 @@ void MainWindow::on_pb_clearConsole_clicked()
     ui->btnSelectRegister->setEnabled(false);
 }
 
-QString MainWindow::getQueryString(int &ok)
+QString MainWindow::getConnectionString(int &ok)
 {
     ConnectGui connection(this);
     connection.setModal(true);
@@ -77,10 +86,46 @@ QString MainWindow::getQueryString(int &ok)
     return QString("Server=%1;Database=%2;UID=%3;PWD=%4;").arg(serverName,databaseName,userName,password);
 }
 
+QString MainWindow::getExecutionQuery()
+{
+    QString currentTable = ui->cb_TableSelect->currentText();
+    return QString(recoveryQueryBase).arg(currentTable);
+}
+
+void MainWindow::updateTableStructure()
+{
+    QString currentTable = ui->cb_TableSelect->currentText();
+    QString queryTextA("SELECT SC.NAME AS name, ST.NAME AS type, SC.MAX_LENGTH AS size, SC.SCALE AS scale FROM "
+                       "sys.objects SO INNER JOIN sys.columns SC ON SO.object_id = SC.object_id INNER JOIN "
+                       "sys.types ST ON ST.system_type_id = SC.system_type_id AND ST.name != 'sysname' WHERE ");
+    QString queryTextB = QString("SO.type='U' AND SO.name='%1' ORDER BY SC.object_id").arg(currentTable);
+    queryTextA.append(queryTextB);
+    QSqlQuery query(*(myLogReader->database));
+    if(myLogReader->database->open())
+    {
+        tableStructure.clear();
+        query.exec(queryTextA);
+        while (query.next())
+        {
+            ColumnStructure column;
+            column.name = query.value(0).toString();
+            column.type = query.value(1).toString();
+            column.size = query.value(2).toInt();
+            auto type = column.type.toLower();
+            if(type == "decimal" || type == "numeric")
+                column.size *= 2;
+            column.precision = query.value(3).toInt();
+            tableStructure.append(column);
+        }
+    }
+    return;
+}
+
 void MainWindow::on_pb_testQuery_clicked()
 {
-    auto query = ui->le_Query->text();
-    currentData = myLogReader->runQuery(query);
+    updateTableStructure();
+    auto query = getExecutionQuery();
+    currentData = myLogReader->runSingleColumnQuery(query);
     QString consoleText;
     int counter = 0;
     for(auto &reg:currentData)
@@ -122,7 +167,13 @@ void MainWindow::on_btnSelectRegister_clicked()
     if (!ok)
         return;
     RegisterRestorer restorer(this);
-    restorer.initialize(currentData[--registryId]);
+    restorer.initialize(currentData[--registryId],tableStructure);
     restorer.setModal(true);
     restorer.exec();
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    this->close();
 }

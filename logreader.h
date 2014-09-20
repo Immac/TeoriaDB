@@ -26,10 +26,13 @@ public:
 
     QList<QByteArray> getRawLog();
     QList<QByteArray> runTestQuery();
-    QList<QByteArray> runQuery(QString queryString);
+    QList<QByteArray> runSingleColumnQuery(QString queryString);
+    QList<QByteArray> runSeveralColumnQuery(QString queryString,int columnCount);
+
+    QSqlDatabasePtr database;
+
 private:
     QString connectionString;
-    QSqlDatabasePtr database;
 
 };
 

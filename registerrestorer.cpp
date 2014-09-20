@@ -14,8 +14,9 @@ RegisterRestorer::~RegisterRestorer()
 }
 
 
-void RegisterRestorer::initialize(QByteArray input)
+void RegisterRestorer::initialize(QByteArray input, QList<ColumnStructure> tableStructure)
 {
+    this->tableStructure = tableStructure;
     registerData = input;
     positionIndicator = 2;
     updateStatusBitA();
@@ -31,6 +32,7 @@ void RegisterRestorer::initialize(QByteArray input)
         updateVariableData();
     }
     createFieldDescriptors(columnCount);
+    fillFieldDescriptors();
 }
 
 void RegisterRestorer::createFieldDescriptors(double columnCount)
@@ -38,6 +40,7 @@ void RegisterRestorer::createFieldDescriptors(double columnCount)
     for(int i = 0; i < columnCount ; i++)
     {
         auto newFieldDescriptor = new FieldDescriptor(ui->scrollAreaWidgetContents);
+
         ui->scrollAreaWidgetContents->layout()->addWidget(newFieldDescriptor);
         descriptors.append(newFieldDescriptor);
     }
@@ -78,6 +81,20 @@ void RegisterRestorer::updateVariableData()
     for(;positionIndicator < variableColumnOffsets.last();positionIndicator++)
         variableDataByteArray.append(registerData[positionIndicator]);
     ui->leVariableData->setText(HexManager::toHexString(variableDataByteArray));
+}
+
+void RegisterRestorer::fillFieldDescriptors()
+{
+    int i = 0;
+    for(auto &item:descriptors)
+    {
+        descriptors[i]->setName(tableStructure[i].name);
+        descriptors[i]->setSelectedType(tableStructure[i].type);
+        descriptors[i]->setSizeOfElement(tableStructure[i].size);
+        descriptors[i]->setPrecision(tableStructure[i].precision);
+        i++;
+    }
+    return;
 }
 
 int RegisterRestorer::calculateDecimalLength(int input)
@@ -152,15 +169,19 @@ void RegisterRestorer::on_pbRecover_clicked()
     int currentOffset = 0;
     int fixedColumnsToGo = columnCount - variableColumnCount;
     int varColumnsToGo = variableColumnCount;
+    int bitCounter = 0;
+    int bitBytePosition = 0;
+    int bitIndex = bitCounter%8;
     for(int i = 0; i < descriptors.size(); i++)
     {
+        int bit = 0;
+        int byte = 0;
         int start;
         int length;
         int end;
-        int bitCounter = 0;
         int decimalPlace;
         QByteArray myByteArray;
-        int selectedElement = descriptors[i]->getSelectedElement();
+        int selectedElement = descriptors[i]->getSelectedType();
         switch (selectedElement) {
         case Char:
             if(fixedColumnsToGo == 0) break;
@@ -266,9 +287,17 @@ void RegisterRestorer::on_pbRecover_clicked()
             break;
         case Bit:
             if(fixedColumnsToGo == 0) break;
-            if(bitCounter%8 == 0)
-                currentPosition++;
+            bitIndex = bitCounter%8;
+            if(bitIndex == 0)
+                bitBytePosition = currentPosition++;
             //TO DO
+            length = 1;
+            start = bitBytePosition;
+            myByteArray.append(registerData.mid(start,length));
+            byte = ByteCaster::toLongLong(myByteArray);
+            bit = (byte&bitMask[bitIndex]);
+            bit = bit >> bitIndex;
+            descriptors[i]->setValue(QString::number(bit));
             bitCounter++;
             --fixedColumnsToGo;
             break;

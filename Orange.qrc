@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/Image">
+        <file>Resource/checkbox.png</file>
+        <file>Resource/down_arrow.png</file>
+        <file>Resource/handle.png</file>
+    </qresource>
+</RCC>

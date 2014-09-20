@@ -8,6 +8,7 @@
 #include "hexmanager.h"
 #include "bytecaster.h"
 #include "fielddesccriptor.h"
+#include "columnstructure.h"
 
 namespace Ui {
 class RegisterRestorer;
@@ -20,7 +21,7 @@ class RegisterRestorer : public QDialog
 public:
     explicit RegisterRestorer(QWidget *parent = 0);
     ~RegisterRestorer();
-    void initialize(QByteArray input);
+    void initialize(QByteArray input, QList<ColumnStructure> tableStructure);
     QByteArray registerData;
 
     QByteArray nullBits;
@@ -52,10 +53,13 @@ private:
     int updateVariableColumnCount();
     void updateOffsets(int variableColumnCount);
     void updateVariableData();
+    void fillFieldDescriptors();
 private:
     Ui::RegisterRestorer *ui;
     int positionIndicator;
+    QList<ColumnStructure>tableStructure;
     int calculateDecimalLength(int input);
+    int bitMask[8] = {1,2,4,8,16,32,64,128};
 };
 
 #endif // REGISTERRESTORER_H

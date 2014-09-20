@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     bytecaster.cpp \
     fielddesccriptor.cpp \
     numeric.cpp \
-    connectgui.cpp
+    connectgui.cpp \
+    columnstructure.cpp
 
 HEADERS  += mainwindow.h \
     logreader.h \
@@ -29,9 +30,13 @@ HEADERS  += mainwindow.h \
     bytecaster.h \
     fielddesccriptor.h \
     numeric.h \
-    connectgui.h
+    connectgui.h \
+    columnstructure.h
 
 FORMS    += mainwindow.ui \
     registerrestorer.ui \
     fielddesccriptor.ui \
     connectgui.ui
+
+RESOURCES += \
+    Orange.qrc
